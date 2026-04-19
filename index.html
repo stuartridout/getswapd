@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Swapd — The photos you'd never post.</title>
+<meta name="description" content="A private shared space for two. Trade the real photos — the ones you'd never post anywhere else. Not for everyone. Just for you two.">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Swapd — The photos you'd never post.">
+<meta property="og:description" content="A private shared space for two. For the photos you'd never post anywhere else.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://getswapd.com">
+<meta property="og:image" content="https://getswapd.com/og-image.png">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Swapd — The photos you'd never post.">
+<meta name="twitter:description" content="A private shared space for two.">
+
+<!-- Theme colour (Safari, Chrome) -->
+<meta name="theme-color" content="#0C6E72">
+
+<!-- Favicon — simple teal dot -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230C6E72'/%3E%3Ccircle cx='70' cy='30' r='8' fill='%23FF4E94'/%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --teal:         #0C6E72;
+    --teal-deep:    #084D50;
+    --teal-ink:     #052E30;
+    --teal-soft:    #E6F2F2;
+    --teal-softer:  #F2F8F8;
+
+    --pink:         #FF4E94;
+    --pink-deep:    #E6377B;
+
+    --lavender:     #E4DAF7;
+    --lavender-soft:#F4EEFB;
+
+    --white:        #FFFFFF;
+    --paper:        #FAFAFA;
+    --rule:         #ECECEC;
+    --rule-soft:    #F4F4F4;
+
+    --ink:          #151517;
+    --ink-2:        #4A4A52;
+    --ink-3:        #8A8A92;
+
+    --shadow-sm:       0 1px 2px rgba(15,15,20,.04), 0 2px 4px rgba(15,15,20,.03);
+    --shadow-md:       0 2px 4px rgba(15,15,20,.04), 0 8px 20px rgba(15,15,20,.06);
+    --shadow-card:     0 2px 6px rgba(15,15,20,.05), 0 12px 28px rgba(15,15,20,.08);
+    --shadow-lift:     0 1px 3px rgba(12,110,114,.15), 0 10px 24px rgba(12,110,114,.18);
+    --shadow-polaroid: 0 3px 6px rgba(15,15,20,.08), 0 14px 36px rgba(15,15,20,.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Figtree', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--white);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.55;
+  }
+
+  /* ======================= NAV ======================= */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 16px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--rule-soft);
+  }
+  .wordmark {
+    font-weight: 900;
+    font-size: 26px;
+    letter-spacing: -0.035em;
+    color: var(--teal-ink);
+    text-decoration: none;
+  }
+  .wordmark-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: var(--pink);
+    border-radius: 50%;
+    vertical-align: super;
+    margin-left: 3px;
+    margin-top: 4px;
+  }
+  nav .nav-cta {
+    background: var(--teal);
+    color: var(--white);
+    border: none;
+    border-radius: 100px;
+    padding: 10px 20px;
+    font-family: 'Figtree', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    text-decoration: none;
+    box-shadow: var(--shadow-lift);
+    letter-spacing: -0.01em;
+    transition: transform 0.2s;
+  }
+  nav .nav-cta:hover { transform: translateY(-1px); }
+
+  /* ======================= SHARED ======================= */
+  .container {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+  section {
+    padding: 96px 0;
+    position: relative;
+  }
+
+  .section-label {
+    font-weight: 800;
+    font-size: 12px;
+    color: var(--teal);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .section-label.pink { color: var(--pink-deep); }
+  .section-label.centre { text-align: center; }
+
+  h1, h2, h3 { letter-spacing: -0.035em; color: var(--teal-ink); font-weight: 800; line-height: 1.05; }
+  h1 { font-size: clamp(44px, 7vw, 88px); }
+  h2 { font-size: clamp(32px, 4.5vw, 56px); margin-bottom: 24px; }
+  h3 { font-size: clamp(22px, 2.5vw, 28px); margin-bottom: 12px; }
+
+  .prose {
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--ink-2);
+    max-width: 560px;
+  }
+  .prose-lg {
+    font-size: 22px;
+    line-height: 1.55;
+    color: var(--ink-2);
+    max-width: 640px;
+  }
+
+  /* Fraunces voice moment */
+  .voice {
+    font-family: 'Fraunces', Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    font-variation-settings: 'opsz' 72;
+    color: var(--teal-deep);
+  }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+    border-radius: 100px;
+    padding: 16px 28px;
+    font-family: 'Figtree', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: -0.01em;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-primary {
+    background: var(--teal);
+    color: var(--white);
+    box-shadow: var(--shadow-lift);
+  }
+  .btn-primary:hover { transform: translateY(-1px); }
+  .btn-white {
+    background: var(--white);
+    color: var(--ink);
+    box-shadow: var(--shadow-md);
+  }
+  .btn-arrow::after {
+    content: '→';
+    font-weight: 700;
+    margin-left: 2px;
+  }
+
+  /* ======================= HERO ======================= */
+  .hero {
+    padding: 148px 0 80px;
+    background: linear-gradient(180deg, var(--teal-softer) 0%, var(--white) 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+  .hero-copy h1 {
+    margin-bottom: 24px;
+  }
+  .hero-copy .tagline {
+    font-family: 'Fraunces', Georgia, serif;
+    font-style: italic;
+    font-size: clamp(20px, 2vw, 26px);
+    color: var(--pink-deep);
+    font-variation-settings: 'opsz' 72;
+    margin-bottom: 12px;
+    font-weight: 400;
+  }
+  .hero-copy .prose-lg {
+    margin-bottom: 36px;
+  }
+  .hero-ctas {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .hero-meta {
+    margin-top: 28px;
+    font-size: 13px;
+    color: var(--ink-3);
+    font-weight: 500;
+  }
+
+  /* Hero polaroid cluster */
+  .polaroid-cluster {
+    position: relative;
+    height: 520px;
+    width: 100%;
+  }
+  .polaroid {
+    position: absolute;
+    background: var(--white);
+    border-radius: 12px;
+    padding: 10px 10px 36px 10px;
+    box-shadow: var(--shadow-polaroid);
+  }
+  .polaroid-photo {
+    width: 100%;
+    height: 100%;
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+  }
+  .polaroid-caption {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-family: 'Fraunces', Georgia, serif;
+    font-style: italic;
+    font-size: 12px;
+    color: var(--ink-3);
+    font-variation-settings: 'opsz' 72;
+  }
+
+  /* Photo gradients */
+  .ph-warm {
+    background:
+      radial-gradient(circle at 50% 38%, #FFD4B8 0 18%, transparent 19%),
+      linear-gradient(180deg, #FFB08F 0%, #FF7A8A 100%);
+    position: relative;
+  }
+  .ph-warm::after {
+    content: ''; position: absolute; bottom: 20%; left: 25%; right: 25%; height: 8px;
+    background: #B8524D; border-radius: 50%; opacity: 0.4;
+  }
+  .ph-dusk {
+    background: linear-gradient(180deg, #2A1F3E 0%, #5A3F6E 50%, #A85A8A 100%);
+    position: relative;
+  }
+  .ph-dusk::before {
+    content: ''; position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at 25% 30%, rgba(255,220,180,0.7) 0 3px, transparent 4px),
+      radial-gradient(circle at 72% 22%, rgba(255,220,180,0.6) 0 2px, transparent 3px),
+      radial-gradient(circle at 38% 60%, rgba(255,220,180,0.5) 0 2px, transparent 3px),
+      radial-gradient(circle at 82% 68%, rgba(255,220,180,0.8) 0 3px, transparent 4px);
+  }
+  .ph-garden {
+    background: linear-gradient(180deg, #A8D8E8 0%, #E8F4D8 60%, #F4E8B8 100%);
+    position: relative;
+  }
+  .ph-garden::before {
+    content: ''; position: absolute; bottom: 20%; left: 20%; width: 40%; height: 22%;
+    background: #5A8B6E; border-radius: 50% 50% 10% 10%;
+  }
+  .ph-garden::after {
+    content: ''; position: absolute; bottom: 15%; right: 15%; width: 30%; height: 27%;
+    background: #7AA888; border-radius: 50% 50% 8% 8%;
+  }
+  .ph-cream {
+    background: linear-gradient(160deg, #FFDDAA 0%, #FFAA88 100%);
+    position: relative;
+  }
+  .ph-cream::after {
+    content: ''; position: absolute; top: 30%; left: 50%;
+    width: 30%; height: 30%; background: #FFEBC8;
+    border-radius: 50%; transform: translateX(-50%);
+  }
+  .ph-bright {
+    background: linear-gradient(160deg, #F4B8D8 0%, #C7A0E8 50%, #8BB8E8 100%);
+    position: relative;
+  }
+  .ph-bright::before {
+    content: ''; position: absolute; top: 30%; left: 50%; transform: translateX(-50%);
+    width: 50%; height: 3px; background: rgba(255,255,255,0.9);
+  }
+
+  /* Hero cluster positioning */
+  .polaroid-cluster .p-1 { width: 180px; height: 220px; top: 30px; left: 10%; transform: rotate(-8deg); z-index: 3; }
+  .polaroid-cluster .p-2 { width: 160px; height: 200px; top: 80px; left: 45%; transform: rotate(6deg); z-index: 4; }
+  .polaroid-cluster .p-3 { width: 170px; height: 210px; top: 260px; left: 20%; transform: rotate(4deg); z-index: 2; }
+  .polaroid-cluster .p-4 { width: 150px; height: 180px; top: 290px; left: 55%; transform: rotate(-4deg); z-index: 1; }
+
+  /* ======================= INSIGHT SECTION ======================= */
+  .insight {
+    background: var(--white);
+    padding: 120px 0;
+  }
+  .insight-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    margin-top: 64px;
+  }
+  .tier {
+    padding: 36px 32px;
+    border-radius: 24px;
+    background: var(--paper);
+    box-shadow: var(--shadow-md);
+    position: relative;
+  }
+  .tier.highlight {
+    background: var(--lavender-soft);
+    box-shadow: var(--shadow-card);
+    transform: translateY(-8px);
+  }
+  .tier-pct {
+    font-weight: 900;
+    font-size: 64px;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    color: var(--teal-ink);
+    margin-bottom: 8px;
+  }
+  .tier.highlight .tier-pct { color: var(--pink-deep); }
+  .tier-label {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 16px;
+    letter-spacing: -0.01em;
+  }
+  .tier p {
+    font-size: 15px;
+    color: var(--ink-2);
+    line-height: 1.55;
+  }
+  .tier.highlight p { color: var(--ink); font-weight: 500; }
+
+  /* ======================= MECHANIC SECTION ======================= */
+  .mechanic {
+    background: var(--lavender-soft);
+    padding: 120px 0;
+  }
+  .mechanic-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+  .mechanic-visual {
+    position: relative;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .reveal-pair {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    height: 280px;
+  }
+  .reveal-polaroid {
+    position: absolute;
+    width: 200px;
+    height: 240px;
+    background: var(--white);
+    border-radius: 14px;
+    padding: 10px 10px 40px 10px;
+    box-shadow: var(--shadow-polaroid);
+  }
+  .reveal-polaroid.back { left: 20px; top: 20px; transform: rotate(-5deg); }
+  .reveal-polaroid.front { right: 20px; top: 0; transform: rotate(5deg); }
+  .reveal-photo {
+    width: 100%; height: 100%;
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+  }
+  .reveal-mystery {
+    width: 100%; height: 100%;
+    background: var(--pink-deep);
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 6px;
+  }
+  .reveal-mystery::after {
+    content: '?';
+    font-family: 'Fraunces', Georgia, serif;
+    font-style: italic;
+    font-size: 72px;
+    color: var(--white);
+    font-variation-settings: 'opsz' 72;
+  }
+
+  /* ======================= VALUES SECTION ======================= */
+  .values {
+    background: var(--white);
+    padding: 120px 0;
+  }
+  .values h2 {
+    max-width: 860px;
+    margin: 0 auto 48px;
+    text-align: center;
+  }
+  .values-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  .value-card {
+    background: var(--paper);
+    border-radius: 20px;
+    padding: 32px 24px;
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+  }
+  .value-card .x {
+    display: inline-block;
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: var(--white);
+    color: var(--pink-deep);
+    font-family: 'Fraunces', Georgia, serif;
+    font-style: italic;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 44px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow-sm);
+  }
+  .value-card h3 {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+  .value-card p {
+    font-size: 13px;
+    color: var(--ink-2);
+    line-height: 1.5;
+  }
+
+  /* ======================= CTA SECTION ======================= */
+  .cta {
+    padding: 120px 0;
+    background: var(--teal-ink);
+    color: var(--white);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta h2 { color: var(--white); margin-bottom: 20px; }
+  .cta .voice {
+    color: var(--pink);
+    font-size: clamp(22px, 2.4vw, 28px);
+    margin-bottom: 36px;
+    display: block;
+  }
+  .cta-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .cta-buttons .btn-primary {
+    background: var(--pink);
+    color: var(--white);
+    box-shadow: 0 2px 4px rgba(255,78,148,.18), 0 10px 24px rgba(255,78,148,.3);
+  }
+  .cta-buttons .btn-primary:hover { transform: translateY(-1px); }
+  .cta-meta {
+    margin-top: 28px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+  }
+
+  /* Decorative polaroid in CTA corner */
+  .cta-decor {
+    position: absolute;
+    bottom: -60px; right: -40px;
+    width: 180px; height: 220px;
+    background: var(--white);
+    border-radius: 14px;
+    padding: 10px 10px 40px 10px;
+    transform: rotate(15deg);
+    opacity: 0.1;
+    box-shadow: var(--shadow-polaroid);
+  }
+
+  /* ======================= FOOTER ======================= */
+  footer {
+    background: var(--teal-ink);
+    color: rgba(255,255,255,0.6);
+    padding: 48px 0 36px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    font-size: 13px;
+  }
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  footer .wordmark-foot {
+    color: var(--white);
+    font-weight: 900;
+    font-size: 20px;
+    letter-spacing: -0.03em;
+    text-decoration: none;
+  }
+  footer .wordmark-foot .wordmark-dot {
+    width: 6px; height: 6px; margin-top: 3px;
+  }
+  footer a { color: rgba(255,255,255,0.7); text-decoration: none; margin-left: 20px; }
+  footer a:hover { color: var(--white); }
+
+  /* ======================= RESPONSIVE ======================= */
+  @media (max-width: 860px) {
+    section { padding: 72px 0; }
+    .hero { padding: 124px 0 56px; }
+    .hero-inner { grid-template-columns: 1fr; gap: 48px; }
+    .polaroid-cluster { height: 440px; max-width: 400px; margin: 0 auto; }
+    .mechanic-inner { grid-template-columns: 1fr; gap: 48px; }
+    .insight-grid { grid-template-columns: 1fr; gap: 20px; }
+    .tier.highlight { transform: none; }
+    .values-list { grid-template-columns: repeat(2, 1fr); }
+    nav { padding: 14px 20px; }
+    .container { padding: 0 20px; }
+    h1 { font-size: 44px; }
+  }
+  @media (max-width: 480px) {
+    .values-list { grid-template-columns: 1fr; }
+    .polaroid-cluster .p-1 { width: 150px; height: 180px; }
+    .polaroid-cluster .p-2 { width: 140px; height: 170px; }
+    .polaroid-cluster .p-3 { width: 145px; height: 175px; }
+    .polaroid-cluster .p-4 { width: 135px; height: 160px; }
+    .reveal-polaroid { width: 160px; height: 200px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="wordmark">swapd<span class="wordmark-dot"></span></a>
+  <a href="/app" class="nav-cta">Get the app</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <div class="tagline">Not for everyone. Just for you two.</div>
+        <h1>The photos you'd never post.</h1>
+        <p class="prose-lg">A private shared space for two. For the unflattering, the in-jokes, the screenshots only one other person would understand. The middle of your camera roll, finally somewhere to go.</p>
+        <div class="hero-ctas">
+          <a href="/app" class="btn btn-primary btn-arrow">Get the app</a>
+          <a href="#how" class="btn btn-white">How it works</a>
+        </div>
+        <div class="hero-meta">iPhone &amp; Android · Free to start · No ads, ever</div>
+      </div>
+      <div class="polaroid-cluster">
+        <div class="polaroid p-1">
+          <div class="polaroid-photo ph-warm"></div>
+          <div class="polaroid-caption">the ugly one</div>
+        </div>
+        <div class="polaroid p-2">
+          <div class="polaroid-photo ph-bright"></div>
+          <div class="polaroid-caption">no good</div>
+        </div>
+        <div class="polaroid p-3">
+          <div class="polaroid-photo ph-garden"></div>
+          <div class="polaroid-caption">the view</div>
+        </div>
+        <div class="polaroid p-4">
+          <div class="polaroid-photo ph-dusk"></div>
+          <div class="polaroid-caption">2am</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE INSIGHT -->
+<section class="insight" id="insight">
+  <div class="container">
+    <div class="section-label">The insight</div>
+    <h2>Your camera roll has three tiers.</h2>
+    <p class="prose-lg">Most of what you take never goes anywhere. Not because you don't want to share it — because there's nowhere right.</p>
+
+    <div class="insight-grid">
+      <div class="tier">
+        <div class="tier-pct">1%</div>
+        <div class="tier-label">The top</div>
+        <p>The curated photos. Good lighting, flattering angle, ready for Instagram. A tiny, performed sliver of your actual life.</p>
+      </div>
+      <div class="tier highlight">
+        <div class="tier-pct">30%</div>
+        <div class="tier-label">The middle</div>
+        <p>The real ones. Ugly-laughing, cry-laughing, mid-blink, messy, honest. Too candid for Instagram, too personal for the group chat. <strong>Nowhere to go. Until now.</strong></p>
+      </div>
+      <div class="tier">
+        <div class="tier-pct">60%</div>
+        <div class="tier-label">The bottom</div>
+        <p>Screenshots, receipts, parking spots, your son's homework, shopping lists. Logistics and clutter, occasionally useful.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE MECHANIC -->
+<section class="mechanic" id="how">
+  <div class="container">
+    <div class="mechanic-inner">
+      <div>
+        <div class="section-label pink">How it works</div>
+        <h2>Both answer. Then both reveal.</h2>
+        <p class="prose-lg">You and one other person answer the same question. Separately. Neither of you sees the other's answer until you've both gone. Then both are shown at once. Mutual exposure is the whole trick — you can send the ugly photo because you know they're about to send theirs too.</p>
+        <p class="prose-lg" style="margin-top: 20px;"><span class="voice">It gets better the longer you do it.</span></p>
+      </div>
+      <div class="mechanic-visual">
+        <div class="reveal-pair">
+          <div class="reveal-polaroid back">
+            <div class="reveal-photo ph-warm"></div>
+          </div>
+          <div class="reveal-polaroid front">
+            <div class="reveal-photo">
+              <div class="reveal-mystery"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES (the anti-positioning) -->
+<section class="values">
+  <div class="container">
+    <div class="section-label centre" style="text-align:center;">What it isn't</div>
+    <h2>No social layer. No audience. No performance.</h2>
+
+    <div class="values-list">
+      <div class="value-card">
+        <span class="x">✕</span>
+        <h3>No followers</h3>
+        <p>Just the two of you. No public profile. No friend graph. No suggestions.</p>
+      </div>
+      <div class="value-card">
+        <span class="x">✕</span>
+        <h3>No likes</h3>
+        <p>Nothing to count. Nothing to farm. Just the photo and what they think of it.</p>
+      </div>
+      <div class="value-card">
+        <span class="x">✕</span>
+        <h3>No streaks</h3>
+        <p>No pressure, no gamified daily guilt. Answer when you want to.</p>
+      </div>
+      <div class="value-card">
+        <span class="x">✕</span>
+        <h3>No ads</h3>
+        <p>Ever. Free to start, small one-off upgrades if you want them. No tracking.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="container" style="position: relative; z-index: 2;">
+    <div class="section-label" style="color: var(--pink); text-align: center;">Swapd</div>
+    <h2>One person. One space.<br>The photos you'd never post.</h2>
+    <span class="voice">Go on then.</span>
+    <div class="cta-buttons">
+      <a href="/app" class="btn btn-primary btn-arrow">Get the app</a>
+    </div>
+    <div class="cta-meta">Free to start · iPhone &amp; Android · No ads, ever</div>
+  </div>
+  <div class="cta-decor">
+    <div class="polaroid-photo ph-cream"></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <a href="/" class="wordmark-foot">swapd<span class="wordmark-dot"></span></a>
+      <div>
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
+        <a href="mailto:hello@getswapd.com">hello@getswapd.com</a>
+      </div>
+    </div>
+    <div style="margin-top: 24px; font-size: 12px; opacity: 0.5;">© 2026 Swapd. Made for two.</div>
+  </div>
+</footer>
+
+</body>
+</html>

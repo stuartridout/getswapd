@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Swapd · Privacy, in plainer words</title>
+<meta name="description" content="What Swapd knows about you, who sees it, and what you can do about it. No legal-speak.">
+<meta name="theme-color" content="#0C6E72">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230C6E72'/%3E%3Ccircle cx='70' cy='30' r='8' fill='%23FF4E94'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #0C6E72;
+    --teal-ink: #052E30;
+    --teal-softer: #F2F8F8;
+    --lavender-soft: #F4EEFB;
+    --pink-bg: #FFF1F6;
+    --pink: #FF4E94;
+    --white: #FFFFFF;
+    --rule: #ECECEC;
+    --ink: #151517;
+    --ink-2: #4A4A52;
+    --ink-3: #8A8A92;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Figtree', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--white);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.55;
+  }
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 16px 28px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--rule);
+  }
+  .wordmark { font-weight: 900; font-size: 22px; letter-spacing: -0.035em; color: var(--teal-ink); text-decoration: none; }
+  .wordmark-dot { display: inline-block; width: 7px; height: 7px; background: var(--pink); border-radius: 50%; vertical-align: super; margin-left: 2px; }
+  nav a.back { font-size: 14px; font-weight: 600; color: var(--ink-3); text-decoration: none; }
+  nav a.back:hover { color: var(--ink); }
+
+  main { max-width: 680px; margin: 0 auto; padding: 104px 28px 80px; }
+
+  .meta { font-size: 11px; letter-spacing: 0.15em; font-weight: 800; color: var(--teal); }
+  h1 { font-size: 40px; font-weight: 900; letter-spacing: -0.03em; margin: 8px 0 12px; color: var(--teal-ink); }
+  .sub { font-size: 18px; color: var(--ink-2); margin-bottom: 32px; }
+  .note { font-size: 13px; color: var(--ink-3); margin-bottom: 32px; padding-bottom: 20px; border-bottom: 1px solid var(--rule); line-height: 1.5; }
+  .note a { color: var(--teal); }
+
+  .panel { border-radius: 20px; padding: 28px; margin-bottom: 20px; }
+  .panel-num { font-size: 12px; font-weight: 800; letter-spacing: 0.1em; color: var(--teal); margin: 0 0 4px; }
+  .panel h2 { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 12px; color: var(--teal-ink); }
+  .panel p { font-size: 16px; margin: 0 0 12px; color: #1A1A1F; line-height: 1.55; }
+  .panel p:last-child { margin-bottom: 0; }
+  .panel ul { padding-left: 20px; margin: 0 0 12px; font-size: 16px; color: #1A1A1F; }
+  .panel li { margin-bottom: 8px; line-height: 1.55; }
+  a { color: var(--teal); text-decoration: underline; }
+  .a-big { font-size: 18px; font-weight: 700; }
+
+  .foot { font-size: 13px; color: var(--ink-3); margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--rule); }
+
+  footer { background: var(--teal-ink); color: rgba(255,255,255,0.6); padding: 40px 28px; margin-top: 80px; font-size: 13px; }
+  .footer-inner { max-width: 680px; margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; align-items: center; }
+  .wm { color: var(--white); font-weight: 900; font-size: 18px; letter-spacing: -0.03em; text-decoration: none; }
+  footer a { color: rgba(255,255,255,0.7); text-decoration: none; margin-left: 20px; }
+  footer a:hover { color: var(--white); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="wordmark">swapd<span class="wordmark-dot"></span></a>
+  <a href="/privacy" class="back">← Full policy</a>
+</nav>
+
+<main>
+  <p class="meta">SWAPD</p>
+  <h1>Privacy, in plainer words</h1>
+  <p class="sub">What Swapd knows about you, who sees it, and what you can do about it. No legal-speak.</p>
+
+  <p class="note">This is a short version of our <a href="/privacy">full privacy policy</a>. Both say the same things. If anything here and the full version contradict each other, the full version is what counts legally.</p>
+
+  <div class="panel" style="background: var(--teal-softer);">
+    <p class="panel-num">1</p>
+    <h2>What we know about you</h2>
+    <p>To run Swapd we need:</p>
+    <ul>
+      <li>Your email address (so you can sign in).</li>
+      <li>Your name (what your partner calls you).</li>
+      <li>Your date of birth (to check you're old enough).</li>
+      <li>A profile photo, if you upload one.</li>
+      <li>The photos, voice notes, and messages you share in Swaps.</li>
+    </ul>
+    <p>That's all. We don't know where you are. We don't read your camera roll. We don't see your contacts. We don't follow you around the internet.</p>
+  </div>
+
+  <div class="panel" style="background: var(--lavender-soft);">
+    <p class="panel-num">2</p>
+    <h2>Who sees it</h2>
+    <p>Your photos and messages are between you and the one person you're swapping with. Nobody at Swapd looks at them.</p>
+    <p>The only exception: if you report a problem and ask us to look at something specific, we look at that specific thing to sort it out. Nothing else.</p>
+    <p>We don't sell your data. We don't show ads. We don't use your stuff to train AI. There isn't a feed. There isn't a public profile. Nobody can find you unless you invite them personally.</p>
+  </div>
+
+  <div class="panel" style="background: var(--teal-softer);">
+    <p class="panel-num">3</p>
+    <h2>What you can do about it</h2>
+    <ul>
+      <li><strong>See everything we have.</strong> Tap "Download my data" on the <strong>You</strong> tab. We'll send you a file with all your stuff.</li>
+      <li><strong>Delete your account.</strong> Tap "Delete my account" on the <strong>You</strong> tab. Your profile and Swaps go away. Your partner is told the Swap is over.</li>
+      <li><strong>Remove a photo.</strong> Tap the photo, then "Ask them to take it down." If they agree, it's gone from both sides.</li>
+      <li><strong>Turn off notifications.</strong> In your phone's settings, or in Swapd's settings.</li>
+    </ul>
+  </div>
+
+  <div class="panel" style="background: var(--pink-bg);">
+    <p class="panel-num">4</p>
+    <h2>If something's wrong</h2>
+    <p>If anything on Swapd upsets you or makes you worry, tell us:</p>
+    <p><a href="mailto:safety@getswapd.com" class="a-big">safety@getswapd.com</a></p>
+    <p>Or report it in-app by tapping the photo and choosing "Report." A real person reads every report. We take them seriously.</p>
+    <p>If someone you don't know is asking to swap with you, or anyone is making you uncomfortable, block them and tell us. Swapd is only meant for people you actually know.</p>
+    <p>If you're worried about your safety, please talk to a trusted adult. If you're in the UK, you can also call <a href="https://www.childline.org.uk">Childline on 0800 1111</a> — it's free and private.</p>
+  </div>
+
+  <p class="foot">The full privacy policy is at <a href="/privacy">getswapd.com/privacy</a>. The terms are at <a href="/terms">getswapd.com/terms</a>.</p>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <a href="/" class="wm">swapd<span class="wordmark-dot" style="width:5px;height:5px;margin-left:2px;"></span></a>
+    <div>
+      <a href="/privacy">Privacy</a>
+      <a href="/terms">Terms</a>
+      <a href="mailto:hello@getswapd.com">hello@getswapd.com</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
