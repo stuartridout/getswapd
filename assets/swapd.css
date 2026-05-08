@@ -1,0 +1,277 @@
+/* swapd marketing site — shared stylesheet
+ * Marmalade palette + Bricolage Grotesque display + Caveat hand-script.
+ * Mirrors the brand tokens in constants/Theme.ts and the iOS app's
+ * <SwapdWordmark> component so the web and the app feel like one thing.
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Caveat:wght@500;700&family=Inter+Tight:wght@400;500;700&display=swap');
+
+:root {
+  /* Palette — Marmalade */
+  --paper: #F2E6CE;
+  --paper-deep: #E8D9B8;
+  --paper-mid: #EDE0C4;
+  --card: #F5ECD8;
+  --sticker: #F4DFAA;
+  --ink: #241B14;
+  --ink-soft: #3D2E22;
+  --ink-muted: #7A6A5E;
+  --ink-line: #DDD0BE;
+  --accent: #D8633A;
+  --accent-deep: #B84B26;
+  --highlight: #F5C24A;
+  --sage: #5C9D78;
+  --plum: #6E4F9E;
+  --blossom: #E85A8E;
+
+  /* Typography */
+  --display: 'Bricolage Grotesque', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --hand: 'Caveat', 'Comic Sans MS', cursive;
+  --ui: 'Inter Tight', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 6px rgba(36, 27, 20, 0.08);
+  --shadow-md: 0 14px 36px rgba(36, 27, 20, 0.10);
+  --shadow-lift: 0 18px 40px rgba(216, 99, 58, 0.18);
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; padding: 0; }
+
+body {
+  background:
+    radial-gradient(ellipse at 50% 0%, var(--paper) 0%, var(--paper-deep) 90%);
+  color: var(--ink);
+  min-height: 100vh;
+  font-family: var(--ui);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Page wrap — used by support / safety / privacy / terms */
+.wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 56px 24px 96px;
+}
+
+/* ── Wordmark ───────────────────────────────────────────────────────────── */
+.swapd-wordmark {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-decoration: none;
+  color: var(--ink);
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 28px;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  gap: 2px;
+  user-select: none;
+}
+.swapd-wordmark.large { font-size: 44px; }
+.swapd-wordmark.small { font-size: 20px; }
+.swapd-wordmark svg {
+  display: block;
+  width: 78px;
+  height: 11px;
+  margin-top: 2px;
+  color: var(--accent);
+}
+.swapd-wordmark.large svg { width: 124px; height: 16px; }
+.swapd-wordmark.small svg { width: 56px; height: 9px; }
+
+.wordmark-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+.wordmark-row a.nav-back {
+  font-family: var(--hand);
+  font-size: 22px;
+  color: var(--accent);
+  text-decoration: none;
+}
+.wordmark-row a.nav-back:hover { color: var(--accent-deep); }
+
+/* ── Typography ─────────────────────────────────────────────────────────── */
+h1, h2, h3 {
+  font-family: var(--display);
+  color: var(--ink);
+  letter-spacing: -0.025em;
+}
+h1 {
+  font-size: 44px;
+  font-weight: 800;
+  margin: 8px 0 12px;
+  line-height: 1.05;
+}
+h2 {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 44px 0 10px;
+  letter-spacing: -0.015em;
+}
+h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 24px 0 4px;
+  font-family: var(--ui);
+  letter-spacing: -0.005em;
+}
+p { font-size: 16px; margin: 0 0 12px; color: var(--ink-soft); }
+.lead { font-size: 18px; color: var(--ink-soft); margin: 0 0 32px; }
+.last {
+  font-family: var(--hand);
+  font-size: 18px;
+  color: var(--ink-muted);
+  margin: 0 0 32px;
+}
+ul { padding-left: 22px; margin: 0 0 12px; font-size: 16px; color: var(--ink-soft); }
+li { margin-bottom: 6px; }
+strong { color: var(--ink); font-weight: 700; }
+a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+a:hover { color: var(--accent-deep); }
+
+/* ── Highlighted summary block (used in privacy / terms) ────────────────── */
+.summary {
+  background: var(--sticker);
+  border-radius: 18px;
+  padding: 22px 26px;
+  margin: 0 0 32px;
+  border: 1px solid rgba(216, 99, 58, 0.2);
+}
+.summary-label {
+  font-family: var(--hand);
+  font-size: 18px;
+  color: var(--accent);
+  margin: 0 0 6px;
+  letter-spacing: 0;
+  font-weight: 700;
+}
+.summary p { font-size: 16px; color: var(--ink); margin: 0 0 8px; }
+.summary p:last-child { margin-bottom: 0; }
+
+/* ── Contact card (support / safety) ────────────────────────────────────── */
+.contact {
+  background: var(--card);
+  border: 1px solid rgba(36, 27, 20, 0.10);
+  border-radius: 18px;
+  padding: 22px 26px;
+  margin-top: 40px;
+}
+.contact h2 { margin-top: 0; }
+
+/* ── Footer note ────────────────────────────────────────────────────────── */
+.foot {
+  font-family: var(--hand);
+  font-size: 18px;
+  color: var(--ink-muted);
+  margin-top: 48px;
+  padding-top: 20px;
+  border-top: 1px solid var(--ink-line);
+}
+
+/* ── Cards (used by /join) ──────────────────────────────────────────────── */
+.center-stage {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 18px;
+}
+.card {
+  background: var(--card);
+  border-radius: 24px;
+  padding: 32px 28px;
+  max-width: 460px;
+  width: 100%;
+  box-shadow: var(--shadow-md);
+  border: 1px solid rgba(36, 27, 20, 0.06);
+}
+.card h1 {
+  font-size: 34px;
+  margin: 12px 0 12px;
+}
+.code-box {
+  background: var(--paper);
+  border: 1px dashed var(--accent);
+  border-radius: 16px;
+  padding: 18px 20px;
+  text-align: center;
+}
+.code-label {
+  font-family: var(--hand);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--accent);
+  margin: 0 0 4px;
+}
+.code {
+  font-family: var(--display);
+  font-size: 38px;
+  font-weight: 800;
+  letter-spacing: 6px;
+  color: var(--ink);
+  margin: 0;
+  word-break: break-all;
+}
+
+/* ── Buttons ────────────────────────────────────────────────────────────── */
+.actions { display: flex; flex-direction: column; gap: 10px; margin-top: 22px; }
+.btn {
+  appearance: none;
+  -webkit-appearance: none;
+  border: none;
+  border-radius: 999px;
+  padding: 14px 22px;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: var(--ui);
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  transition: transform 80ms ease, box-shadow 200ms ease;
+}
+.btn:active { transform: translateY(1px); }
+.btn-primary { background: var(--accent); color: #FFF8EE; box-shadow: var(--shadow-lift); }
+.btn-primary:hover { background: var(--accent-deep); color: #FFF8EE; }
+.btn-secondary {
+  background: transparent;
+  color: var(--ink);
+  border: 1.5px solid var(--ink);
+  padding: 12px 22px;
+  font-weight: 600;
+}
+.btn-secondary:hover { background: var(--ink); color: var(--paper); }
+
+.small {
+  font-family: var(--hand);
+  font-size: 18px;
+  line-height: 1.45;
+  color: var(--ink-muted);
+  margin: 18px 0 0;
+}
+
+/* ── Callout (used for Android beta blurb) ──────────────────────────────── */
+.callout {
+  background: linear-gradient(180deg, var(--sticker) 0%, var(--paper) 100%);
+  border: 1px solid rgba(216, 99, 58, 0.25);
+  border-radius: 16px;
+  padding: 18px 22px;
+  margin: 24px 0;
+}
+.callout-label {
+  font-family: var(--hand);
+  font-size: 20px;
+  color: var(--accent);
+  margin: 0 0 6px;
+  font-weight: 700;
+}
+.callout p { color: var(--ink); margin: 0 0 8px; }
+.callout p:last-child { margin-bottom: 0; }

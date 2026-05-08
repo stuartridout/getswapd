@@ -1,745 +1,397 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Swapd — The photos you'd never post.</title>
-<meta name="description" content="A private shared space for two. Trade the real photos — the ones you'd never post anywhere else. Not for everyone. Just for you two.">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>swapd — two friends, one photo at a time</title>
+  <meta name="description" content="swapd is a private two-person photo app. You both answer before either of you sees the reply. No feed, no streaks, no audience." />
+  <meta property="og:title" content="swapd — two friends, one photo at a time" />
+  <meta property="og:description" content="A private two-person photo app. You both answer before either of you sees the reply. No feed, no streaks, no audience." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://getswapd.com/" />
+  <meta property="og:image" content="https://getswapd.com/assets/screenshots/03-reveal.jpg" />
+  <link rel="stylesheet" href="/assets/swapd.css" />
+  <style>
+    body { padding: 0; }
+    .home {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 36px 24px 80px;
+    }
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 64px;
+    }
+    .topbar-links {
+      display: flex;
+      gap: 22px;
+      font-family: var(--hand);
+      font-size: 19px;
+    }
+    .topbar-links a {
+      color: var(--ink-soft);
+      text-decoration: none;
+    }
+    .topbar-links a:hover { color: var(--accent); }
 
-<!-- Open Graph -->
-<meta property="og:title" content="Swapd — The photos you'd never post.">
-<meta property="og:description" content="A private shared space for two. For the photos you'd never post anywhere else.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://getswapd.com">
-<meta property="og:image" content="https://getswapd.com/og-image.png">
+    /* ── Hero ─────────────────────────────────────────────────────────── */
+    .hero {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 56px;
+      align-items: center;
+      margin-bottom: 96px;
+    }
+    .hero-eyebrow {
+      font-family: var(--hand);
+      color: var(--accent);
+      font-size: 22px;
+      margin: 0 0 8px;
+    }
+    .hero h1 {
+      font-size: 72px;
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+      margin: 0 0 20px;
+    }
+    .hero h1 .highlight {
+      background: linear-gradient(180deg, transparent 60%, var(--highlight) 60%);
+      padding: 0 6px;
+      border-radius: 4px;
+    }
+    .hero .lead {
+      font-size: 19px;
+      color: var(--ink-soft);
+      margin: 0 0 32px;
+      max-width: 520px;
+    }
+    .cta-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .cta-row .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 22px;
+    }
+    .apple-logo, .android-logo {
+      width: 22px;
+      height: 22px;
+      flex-shrink: 0;
+    }
 
-<!-- Twitter Card -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Swapd — The photos you'd never post.">
-<meta name="twitter:description" content="A private shared space for two.">
+    .hero-art {
+      position: relative;
+      min-height: 540px;
+    }
+    .hero-art img {
+      position: absolute;
+      width: 64%;
+      border-radius: 26px;
+      box-shadow: var(--shadow-md);
+    }
+    .hero-art img.behind {
+      top: 36px;
+      right: 0;
+      transform: rotate(4deg);
+      z-index: 1;
+      width: 58%;
+      opacity: 0.92;
+    }
+    .hero-art img.front {
+      top: 0;
+      left: 0;
+      transform: rotate(-3deg);
+      z-index: 2;
+    }
 
-<!-- Theme colour (Safari, Chrome) -->
-<meta name="theme-color" content="#0C6E72">
+    /* ── How it works ─────────────────────────────────────────────────── */
+    .section-heading {
+      text-align: center;
+      margin: 0 auto 48px;
+      max-width: 640px;
+    }
+    .section-heading .eyebrow {
+      font-family: var(--hand);
+      color: var(--accent);
+      font-size: 22px;
+      margin: 0 0 6px;
+    }
+    .section-heading h2 {
+      font-size: 44px;
+      letter-spacing: -0.025em;
+      margin: 0 0 12px;
+    }
+    .section-heading p {
+      font-size: 18px;
+      color: var(--ink-soft);
+    }
 
-<!-- Favicon — simple teal dot -->
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230C6E72'/%3E%3Ccircle cx='70' cy='30' r='8' fill='%23FF4E94'/%3E%3C/svg%3E">
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-bottom: 96px;
+    }
+    .step {
+      background: var(--card);
+      border: 1px solid rgba(36, 27, 20, 0.08);
+      border-radius: 22px;
+      padding: 28px 28px 32px;
+      box-shadow: var(--shadow-sm);
+    }
+    .step-num {
+      font-family: var(--hand);
+      font-size: 28px;
+      color: var(--accent);
+      margin: 0 0 6px;
+    }
+    .step h3 {
+      font-family: var(--display);
+      font-size: 24px;
+      letter-spacing: -0.02em;
+      margin: 0 0 8px;
+    }
+    .step p { color: var(--ink-soft); margin: 0; }
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&display=swap" rel="stylesheet">
+    /* ── Screenshot strip ─────────────────────────────────────────────── */
+    .strip {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+      margin-bottom: 96px;
+    }
+    .strip img {
+      width: 100%;
+      border-radius: 18px;
+      box-shadow: var(--shadow-md);
+      transform: rotate(0);
+      transition: transform 200ms ease;
+    }
+    .strip img:nth-child(odd) { transform: rotate(-1deg); }
+    .strip img:nth-child(even) { transform: rotate(1deg); }
+    .strip img:hover { transform: rotate(0) scale(1.03); }
 
-<style>
-  :root {
-    --teal:         #0C6E72;
-    --teal-deep:    #084D50;
-    --teal-ink:     #052E30;
-    --teal-soft:    #E6F2F2;
-    --teal-softer:  #F2F8F8;
+    /* ── Why swapd ────────────────────────────────────────────────────── */
+    .why {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 22px;
+      margin-bottom: 96px;
+    }
+    .why-card {
+      background: var(--paper);
+      border: 1px solid var(--ink-line);
+      border-radius: 20px;
+      padding: 26px 28px;
+    }
+    .why-card h3 {
+      font-family: var(--display);
+      font-size: 22px;
+      letter-spacing: -0.015em;
+      margin: 0 0 6px;
+    }
+    .why-card p { color: var(--ink-soft); margin: 0; }
 
-    --pink:         #FF4E94;
-    --pink-deep:    #E6377B;
+    /* ── Big CTA ──────────────────────────────────────────────────────── */
+    .end-cta {
+      background: var(--ink);
+      color: var(--paper);
+      border-radius: 28px;
+      padding: 56px 32px;
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    .end-cta h2 {
+      color: var(--paper);
+      font-size: 44px;
+      letter-spacing: -0.025em;
+      margin: 0 0 12px;
+    }
+    .end-cta .lead {
+      color: rgba(242, 230, 206, 0.78);
+      font-size: 19px;
+      max-width: 520px;
+      margin: 0 auto 28px;
+    }
+    .end-cta .btn-secondary {
+      color: var(--paper);
+      border-color: var(--paper);
+    }
+    .end-cta .btn-secondary:hover { background: var(--paper); color: var(--ink); }
 
-    --lavender:     #E4DAF7;
-    --lavender-soft:#F4EEFB;
+    /* ── Footer ───────────────────────────────────────────────────────── */
+    .home-foot {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 24px;
+      padding-top: 40px;
+      border-top: 1px solid var(--ink-line);
+      font-family: var(--hand);
+      font-size: 18px;
+      color: var(--ink-muted);
+    }
+    .home-foot .links {
+      display: flex;
+      gap: 22px;
+      flex-wrap: wrap;
+    }
+    .home-foot .links a {
+      color: var(--ink-soft);
+      text-decoration: none;
+    }
+    .home-foot .links a:hover { color: var(--accent); }
+    .home-foot small { font-family: var(--ui); font-size: 13px; color: var(--ink-muted); }
 
-    --white:        #FFFFFF;
-    --paper:        #FAFAFA;
-    --rule:         #ECECEC;
-    --rule-soft:    #F4F4F4;
-
-    --ink:          #151517;
-    --ink-2:        #4A4A52;
-    --ink-3:        #8A8A92;
-
-    --shadow-sm:       0 1px 2px rgba(15,15,20,.04), 0 2px 4px rgba(15,15,20,.03);
-    --shadow-md:       0 2px 4px rgba(15,15,20,.04), 0 8px 20px rgba(15,15,20,.06);
-    --shadow-card:     0 2px 6px rgba(15,15,20,.05), 0 12px 28px rgba(15,15,20,.08);
-    --shadow-lift:     0 1px 3px rgba(12,110,114,.15), 0 10px 24px rgba(12,110,114,.18);
-    --shadow-polaroid: 0 3px 6px rgba(15,15,20,.08), 0 14px 36px rgba(15,15,20,.12);
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body {
-    font-family: 'Figtree', -apple-system, BlinkMacSystemFont, sans-serif;
-    background: var(--white);
-    color: var(--ink);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    line-height: 1.55;
-  }
-
-  /* ======================= NAV ======================= */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    padding: 16px 28px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: rgba(255,255,255,0.85);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-bottom: 1px solid var(--rule-soft);
-  }
-  .wordmark {
-    font-weight: 900;
-    font-size: 26px;
-    letter-spacing: -0.035em;
-    color: var(--teal-ink);
-    text-decoration: none;
-  }
-  .wordmark-dot {
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    background: var(--pink);
-    border-radius: 50%;
-    vertical-align: super;
-    margin-left: 3px;
-    margin-top: 4px;
-  }
-  nav .nav-cta {
-    background: var(--teal);
-    color: var(--white);
-    border: none;
-    border-radius: 100px;
-    padding: 10px 20px;
-    font-family: 'Figtree', sans-serif;
-    font-weight: 700;
-    font-size: 14px;
-    text-decoration: none;
-    box-shadow: var(--shadow-lift);
-    letter-spacing: -0.01em;
-    transition: transform 0.2s;
-  }
-  nav .nav-cta:hover { transform: translateY(-1px); }
-
-  /* ======================= SHARED ======================= */
-  .container {
-    max-width: 1120px;
-    margin: 0 auto;
-    padding: 0 28px;
-  }
-  section {
-    padding: 96px 0;
-    position: relative;
-  }
-
-  .section-label {
-    font-weight: 800;
-    font-size: 12px;
-    color: var(--teal);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 16px;
-  }
-  .section-label.pink { color: var(--pink-deep); }
-  .section-label.centre { text-align: center; }
-
-  h1, h2, h3 { letter-spacing: -0.035em; color: var(--teal-ink); font-weight: 800; line-height: 1.05; }
-  h1 { font-size: clamp(44px, 7vw, 88px); }
-  h2 { font-size: clamp(32px, 4.5vw, 56px); margin-bottom: 24px; }
-  h3 { font-size: clamp(22px, 2.5vw, 28px); margin-bottom: 12px; }
-
-  .prose {
-    font-size: 18px;
-    line-height: 1.6;
-    color: var(--ink-2);
-    max-width: 560px;
-  }
-  .prose-lg {
-    font-size: 22px;
-    line-height: 1.55;
-    color: var(--ink-2);
-    max-width: 640px;
-  }
-
-  /* Fraunces voice moment */
-  .voice {
-    font-family: 'Fraunces', Georgia, serif;
-    font-style: italic;
-    font-weight: 400;
-    font-variation-settings: 'opsz' 72;
-    color: var(--teal-deep);
-  }
-
-  /* Buttons */
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    border: none;
-    border-radius: 100px;
-    padding: 16px 28px;
-    font-family: 'Figtree', sans-serif;
-    font-weight: 700;
-    font-size: 16px;
-    letter-spacing: -0.01em;
-    text-decoration: none;
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  .btn-primary {
-    background: var(--teal);
-    color: var(--white);
-    box-shadow: var(--shadow-lift);
-  }
-  .btn-primary:hover { transform: translateY(-1px); }
-  .btn-white {
-    background: var(--white);
-    color: var(--ink);
-    box-shadow: var(--shadow-md);
-  }
-  .btn-arrow::after {
-    content: '→';
-    font-weight: 700;
-    margin-left: 2px;
-  }
-
-  /* ======================= HERO ======================= */
-  .hero {
-    padding: 148px 0 80px;
-    background: linear-gradient(180deg, var(--teal-softer) 0%, var(--white) 100%);
-    position: relative;
-    overflow: hidden;
-  }
-  .hero-inner {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 48px;
-    align-items: center;
-  }
-  .hero-copy h1 {
-    margin-bottom: 24px;
-  }
-  .hero-copy .tagline {
-    font-family: 'Fraunces', Georgia, serif;
-    font-style: italic;
-    font-size: clamp(20px, 2vw, 26px);
-    color: var(--pink-deep);
-    font-variation-settings: 'opsz' 72;
-    margin-bottom: 12px;
-    font-weight: 400;
-  }
-  .hero-copy .prose-lg {
-    margin-bottom: 36px;
-  }
-  .hero-ctas {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-  .hero-meta {
-    margin-top: 28px;
-    font-size: 13px;
-    color: var(--ink-3);
-    font-weight: 500;
-  }
-
-  /* Hero polaroid cluster */
-  .polaroid-cluster {
-    position: relative;
-    height: 520px;
-    width: 100%;
-  }
-  .polaroid {
-    position: absolute;
-    background: var(--white);
-    border-radius: 12px;
-    padding: 10px 10px 36px 10px;
-    box-shadow: var(--shadow-polaroid);
-  }
-  .polaroid-photo {
-    width: 100%;
-    height: 100%;
-    border-radius: 6px;
-    overflow: hidden;
-    position: relative;
-  }
-  .polaroid-caption {
-    position: absolute;
-    bottom: 10px;
-    left: 0;
-    right: 0;
-    text-align: center;
-    font-family: 'Fraunces', Georgia, serif;
-    font-style: italic;
-    font-size: 12px;
-    color: var(--ink-3);
-    font-variation-settings: 'opsz' 72;
-  }
-
-  /* Photo gradients */
-  .ph-warm {
-    background:
-      radial-gradient(circle at 50% 38%, #FFD4B8 0 18%, transparent 19%),
-      linear-gradient(180deg, #FFB08F 0%, #FF7A8A 100%);
-    position: relative;
-  }
-  .ph-warm::after {
-    content: ''; position: absolute; bottom: 20%; left: 25%; right: 25%; height: 8px;
-    background: #B8524D; border-radius: 50%; opacity: 0.4;
-  }
-  .ph-dusk {
-    background: linear-gradient(180deg, #2A1F3E 0%, #5A3F6E 50%, #A85A8A 100%);
-    position: relative;
-  }
-  .ph-dusk::before {
-    content: ''; position: absolute; inset: 0;
-    background:
-      radial-gradient(circle at 25% 30%, rgba(255,220,180,0.7) 0 3px, transparent 4px),
-      radial-gradient(circle at 72% 22%, rgba(255,220,180,0.6) 0 2px, transparent 3px),
-      radial-gradient(circle at 38% 60%, rgba(255,220,180,0.5) 0 2px, transparent 3px),
-      radial-gradient(circle at 82% 68%, rgba(255,220,180,0.8) 0 3px, transparent 4px);
-  }
-  .ph-garden {
-    background: linear-gradient(180deg, #A8D8E8 0%, #E8F4D8 60%, #F4E8B8 100%);
-    position: relative;
-  }
-  .ph-garden::before {
-    content: ''; position: absolute; bottom: 20%; left: 20%; width: 40%; height: 22%;
-    background: #5A8B6E; border-radius: 50% 50% 10% 10%;
-  }
-  .ph-garden::after {
-    content: ''; position: absolute; bottom: 15%; right: 15%; width: 30%; height: 27%;
-    background: #7AA888; border-radius: 50% 50% 8% 8%;
-  }
-  .ph-cream {
-    background: linear-gradient(160deg, #FFDDAA 0%, #FFAA88 100%);
-    position: relative;
-  }
-  .ph-cream::after {
-    content: ''; position: absolute; top: 30%; left: 50%;
-    width: 30%; height: 30%; background: #FFEBC8;
-    border-radius: 50%; transform: translateX(-50%);
-  }
-  .ph-bright {
-    background: linear-gradient(160deg, #F4B8D8 0%, #C7A0E8 50%, #8BB8E8 100%);
-    position: relative;
-  }
-  .ph-bright::before {
-    content: ''; position: absolute; top: 30%; left: 50%; transform: translateX(-50%);
-    width: 50%; height: 3px; background: rgba(255,255,255,0.9);
-  }
-
-  /* Hero cluster positioning */
-  .polaroid-cluster .p-1 { width: 180px; height: 220px; top: 30px; left: 10%; transform: rotate(-8deg); z-index: 3; }
-  .polaroid-cluster .p-2 { width: 160px; height: 200px; top: 80px; left: 45%; transform: rotate(6deg); z-index: 4; }
-  .polaroid-cluster .p-3 { width: 170px; height: 210px; top: 260px; left: 20%; transform: rotate(4deg); z-index: 2; }
-  .polaroid-cluster .p-4 { width: 150px; height: 180px; top: 290px; left: 55%; transform: rotate(-4deg); z-index: 1; }
-
-  /* ======================= INSIGHT SECTION ======================= */
-  .insight {
-    background: var(--white);
-    padding: 120px 0;
-  }
-  .insight-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 32px;
-    margin-top: 64px;
-  }
-  .tier {
-    padding: 36px 32px;
-    border-radius: 24px;
-    background: var(--paper);
-    box-shadow: var(--shadow-md);
-    position: relative;
-  }
-  .tier.highlight {
-    background: var(--lavender-soft);
-    box-shadow: var(--shadow-card);
-    transform: translateY(-8px);
-  }
-  .tier-pct {
-    font-weight: 900;
-    font-size: 64px;
-    letter-spacing: -0.04em;
-    line-height: 1;
-    color: var(--teal-ink);
-    margin-bottom: 8px;
-  }
-  .tier.highlight .tier-pct { color: var(--pink-deep); }
-  .tier-label {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--ink);
-    margin-bottom: 16px;
-    letter-spacing: -0.01em;
-  }
-  .tier p {
-    font-size: 15px;
-    color: var(--ink-2);
-    line-height: 1.55;
-  }
-  .tier.highlight p { color: var(--ink); font-weight: 500; }
-
-  /* ======================= MECHANIC SECTION ======================= */
-  .mechanic {
-    background: var(--lavender-soft);
-    padding: 120px 0;
-  }
-  .mechanic-inner {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 64px;
-    align-items: center;
-  }
-  .mechanic-visual {
-    position: relative;
-    height: 400px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .reveal-pair {
-    position: relative;
-    width: 100%;
-    max-width: 400px;
-    height: 280px;
-  }
-  .reveal-polaroid {
-    position: absolute;
-    width: 200px;
-    height: 240px;
-    background: var(--white);
-    border-radius: 14px;
-    padding: 10px 10px 40px 10px;
-    box-shadow: var(--shadow-polaroid);
-  }
-  .reveal-polaroid.back { left: 20px; top: 20px; transform: rotate(-5deg); }
-  .reveal-polaroid.front { right: 20px; top: 0; transform: rotate(5deg); }
-  .reveal-photo {
-    width: 100%; height: 100%;
-    border-radius: 6px;
-    overflow: hidden;
-    position: relative;
-  }
-  .reveal-mystery {
-    width: 100%; height: 100%;
-    background: var(--pink-deep);
-    display: flex; align-items: center; justify-content: center;
-    border-radius: 6px;
-  }
-  .reveal-mystery::after {
-    content: '?';
-    font-family: 'Fraunces', Georgia, serif;
-    font-style: italic;
-    font-size: 72px;
-    color: var(--white);
-    font-variation-settings: 'opsz' 72;
-  }
-
-  /* ======================= VALUES SECTION ======================= */
-  .values {
-    background: var(--white);
-    padding: 120px 0;
-  }
-  .values h2 {
-    max-width: 860px;
-    margin: 0 auto 48px;
-    text-align: center;
-  }
-  .values-list {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
-    max-width: 960px;
-    margin: 0 auto;
-  }
-  .value-card {
-    background: var(--paper);
-    border-radius: 20px;
-    padding: 32px 24px;
-    text-align: center;
-    box-shadow: var(--shadow-sm);
-  }
-  .value-card .x {
-    display: inline-block;
-    width: 44px; height: 44px;
-    border-radius: 50%;
-    background: var(--white);
-    color: var(--pink-deep);
-    font-family: 'Fraunces', Georgia, serif;
-    font-style: italic;
-    font-size: 24px;
-    font-weight: 400;
-    line-height: 44px;
-    margin-bottom: 16px;
-    box-shadow: var(--shadow-sm);
-  }
-  .value-card h3 {
-    font-size: 17px;
-    font-weight: 700;
-    color: var(--ink);
-    letter-spacing: -0.02em;
-    margin-bottom: 8px;
-  }
-  .value-card p {
-    font-size: 13px;
-    color: var(--ink-2);
-    line-height: 1.5;
-  }
-
-  /* ======================= CTA SECTION ======================= */
-  .cta {
-    padding: 120px 0;
-    background: var(--teal-ink);
-    color: var(--white);
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-  .cta h2 { color: var(--white); margin-bottom: 20px; }
-  .cta .voice {
-    color: var(--pink);
-    font-size: clamp(22px, 2.4vw, 28px);
-    margin-bottom: 36px;
-    display: block;
-  }
-  .cta-buttons {
-    display: flex;
-    gap: 16px;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-  .cta-buttons .btn-primary {
-    background: var(--pink);
-    color: var(--white);
-    box-shadow: 0 2px 4px rgba(255,78,148,.18), 0 10px 24px rgba(255,78,148,.3);
-  }
-  .cta-buttons .btn-primary:hover { transform: translateY(-1px); }
-  .cta-meta {
-    margin-top: 28px;
-    font-size: 13px;
-    color: rgba(255,255,255,0.6);
-  }
-
-  /* Decorative polaroid in CTA corner */
-  .cta-decor {
-    position: absolute;
-    bottom: -60px; right: -40px;
-    width: 180px; height: 220px;
-    background: var(--white);
-    border-radius: 14px;
-    padding: 10px 10px 40px 10px;
-    transform: rotate(15deg);
-    opacity: 0.1;
-    box-shadow: var(--shadow-polaroid);
-  }
-
-  /* ======================= FOOTER ======================= */
-  footer {
-    background: var(--teal-ink);
-    color: rgba(255,255,255,0.6);
-    padding: 48px 0 36px;
-    border-top: 1px solid rgba(255,255,255,0.08);
-    font-size: 13px;
-  }
-  .footer-inner {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 16px;
-  }
-  footer .wordmark-foot {
-    color: var(--white);
-    font-weight: 900;
-    font-size: 20px;
-    letter-spacing: -0.03em;
-    text-decoration: none;
-  }
-  footer .wordmark-foot .wordmark-dot {
-    width: 6px; height: 6px; margin-top: 3px;
-  }
-  footer a { color: rgba(255,255,255,0.7); text-decoration: none; margin-left: 20px; }
-  footer a:hover { color: var(--white); }
-
-  /* ======================= RESPONSIVE ======================= */
-  @media (max-width: 860px) {
-    section { padding: 72px 0; }
-    .hero { padding: 124px 0 56px; }
-    .hero-inner { grid-template-columns: 1fr; gap: 48px; }
-    .polaroid-cluster { height: 440px; max-width: 400px; margin: 0 auto; }
-    .mechanic-inner { grid-template-columns: 1fr; gap: 48px; }
-    .insight-grid { grid-template-columns: 1fr; gap: 20px; }
-    .tier.highlight { transform: none; }
-    .values-list { grid-template-columns: repeat(2, 1fr); }
-    nav { padding: 14px 20px; }
-    .container { padding: 0 20px; }
-    h1 { font-size: 44px; }
-  }
-  @media (max-width: 480px) {
-    .values-list { grid-template-columns: 1fr; }
-    .polaroid-cluster .p-1 { width: 150px; height: 180px; }
-    .polaroid-cluster .p-2 { width: 140px; height: 170px; }
-    .polaroid-cluster .p-3 { width: 145px; height: 175px; }
-    .polaroid-cluster .p-4 { width: 135px; height: 160px; }
-    .reveal-polaroid { width: 160px; height: 200px; }
-  }
-</style>
+    /* ── Mobile ───────────────────────────────────────────────────────── */
+    @media (max-width: 880px) {
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+      .hero h1 { font-size: 48px; }
+      .hero-art { min-height: 380px; max-width: 380px; margin: 0 auto; width: 100%; }
+      .steps { grid-template-columns: 1fr; }
+      .strip { grid-template-columns: repeat(2, 1fr); }
+      .strip img:nth-child(5) { display: none; }
+      .why { grid-template-columns: 1fr; }
+      .section-heading h2, .end-cta h2 { font-size: 32px; }
+      .topbar-links { display: none; }
+    }
+  </style>
 </head>
 <body>
+  <main class="home">
+    <header class="topbar">
+      <a class="swapd-wordmark large" href="/" aria-label="swapd">swapd<svg viewBox="0 0 120 10" aria-hidden="true"><path d="M2 5 Q 18 1, 34 5 T 66 5 T 98 5 T 118 3" stroke="currentColor" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg></a>
+      <nav class="topbar-links">
+        <a href="/support">help</a>
+        <a href="/privacy">privacy</a>
+        <a href="https://apps.apple.com/gb/app/swapd-fun-photo-swaps/id6762082136">App Store</a>
+      </nav>
+    </header>
 
-<!-- NAV -->
-<nav>
-  <a href="/" class="wordmark">swapd<span class="wordmark-dot"></span></a>
-  <a href="/app" class="nav-cta">Get the app</a>
-</nav>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="container">
-    <div class="hero-inner">
-      <div class="hero-copy">
-        <div class="tagline">Not for everyone. Just for you two.</div>
-        <h1>The photos you'd never post.</h1>
-        <p class="prose-lg">A private shared space for two. For the unflattering, the in-jokes, the screenshots only one other person would understand. The middle of your camera roll, finally somewhere to go.</p>
-        <div class="hero-ctas">
-          <a href="/app" class="btn btn-primary btn-arrow">Get the app</a>
-          <a href="#how" class="btn btn-white">How it works</a>
-        </div>
-        <div class="hero-meta">iPhone &amp; Android · Free to start · No ads, ever</div>
-      </div>
-      <div class="polaroid-cluster">
-        <div class="polaroid p-1">
-          <div class="polaroid-photo ph-warm"></div>
-          <div class="polaroid-caption">the ugly one</div>
-        </div>
-        <div class="polaroid p-2">
-          <div class="polaroid-photo ph-bright"></div>
-          <div class="polaroid-caption">no good</div>
-        </div>
-        <div class="polaroid p-3">
-          <div class="polaroid-photo ph-garden"></div>
-          <div class="polaroid-caption">the view</div>
-        </div>
-        <div class="polaroid p-4">
-          <div class="polaroid-photo ph-dusk"></div>
-          <div class="polaroid-caption">2am</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- THE INSIGHT -->
-<section class="insight" id="insight">
-  <div class="container">
-    <div class="section-label">The insight</div>
-    <h2>Your camera roll has three tiers.</h2>
-    <p class="prose-lg">Most of what you take never goes anywhere. Not because you don't want to share it — because there's nowhere right.</p>
-
-    <div class="insight-grid">
-      <div class="tier">
-        <div class="tier-pct">1%</div>
-        <div class="tier-label">The top</div>
-        <p>The curated photos. Good lighting, flattering angle, ready for Instagram. A tiny, performed sliver of your actual life.</p>
-      </div>
-      <div class="tier highlight">
-        <div class="tier-pct">30%</div>
-        <div class="tier-label">The middle</div>
-        <p>The real ones. Ugly-laughing, cry-laughing, mid-blink, messy, honest. Too candid for Instagram, too personal for the group chat. <strong>Nowhere to go. Until now.</strong></p>
-      </div>
-      <div class="tier">
-        <div class="tier-pct">60%</div>
-        <div class="tier-label">The bottom</div>
-        <p>Screenshots, receipts, parking spots, your son's homework, shopping lists. Logistics and clutter, occasionally useful.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- THE MECHANIC -->
-<section class="mechanic" id="how">
-  <div class="container">
-    <div class="mechanic-inner">
+    <section class="hero">
       <div>
-        <div class="section-label pink">How it works</div>
-        <h2>Both answer. Then both reveal.</h2>
-        <p class="prose-lg">You and one other person answer the same question. Separately. Neither of you sees the other's answer until you've both gone. Then both are shown at once. Mutual exposure is the whole trick — you can send the ugly photo because you know they're about to send theirs too.</p>
-        <p class="prose-lg" style="margin-top: 20px;"><span class="voice">It gets better the longer you do it.</span></p>
+        <p class="hero-eyebrow">a small thing for two people</p>
+        <h1>Two friends. <span class="highlight">One</span> photo at a time.</h1>
+        <p class="lead">
+          swapd is a private photo app for two people. Each day you both answer
+          a small prompt &mdash; a photo, a caption, a voice note &mdash; and
+          neither of you sees the reply until you&rsquo;re both in.
+        </p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="https://apps.apple.com/gb/app/swapd-fun-photo-swaps/id6762082136">
+            <svg class="apple-logo" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M17.05 20.28c-.98.95-2.05.86-3.08.42-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.42C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.08zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
+            </svg>
+            Download on the App Store
+          </a>
+          <a class="btn btn-secondary" href="/support#android-beta">
+            <svg class="android-logo" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M6.74 5.85l-1.07-1.86a.42.42 0 0 1 .15-.57.42.42 0 0 1 .57.15l1.08 1.88A8.1 8.1 0 0 1 12 4.5a8.1 8.1 0 0 1 4.53 1.05l1.08-1.88a.42.42 0 0 1 .57-.15.42.42 0 0 1 .15.57l-1.07 1.86A8 8 0 0 1 20 11H4a8 8 0 0 1 2.74-5.15zM8 9.25a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5zm8 0a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5zM4 12.5h16v6.25c0 .69-.56 1.25-1.25 1.25H17v2.25a1.25 1.25 0 1 1-2.5 0V20h-5v2.25a1.25 1.25 0 1 1-2.5 0V20H5.25C4.56 20 4 19.44 4 18.75V12.5zM2.5 13.5a1.25 1.25 0 0 1 2.5 0v5a1.25 1.25 0 1 1-2.5 0v-5zm16.5 0a1.25 1.25 0 0 1 2.5 0v5a1.25 1.25 0 1 1-2.5 0v-5z"/>
+            </svg>
+            Try the Android beta
+          </a>
+        </div>
+        <p class="small">No feed. No streaks. No ads.</p>
       </div>
-      <div class="mechanic-visual">
-        <div class="reveal-pair">
-          <div class="reveal-polaroid back">
-            <div class="reveal-photo ph-warm"></div>
-          </div>
-          <div class="reveal-polaroid front">
-            <div class="reveal-photo">
-              <div class="reveal-mystery"></div>
-            </div>
-          </div>
+      <div class="hero-art" aria-hidden="true">
+        <img class="behind" src="/assets/screenshots/04-roll.jpg" alt="" />
+        <img class="front" src="/assets/screenshots/03-reveal.jpg" alt="" />
+      </div>
+    </section>
+
+    <section>
+      <div class="section-heading">
+        <p class="eyebrow">how it works</p>
+        <h2>Ask. Answer. Reveal.</h2>
+        <p>The whole app is three steps. The first five prompts come ready-made; after that, you make your own.</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <p class="step-num">1.</p>
+          <h3>Ask</h3>
+          <p>Pick a prompt or write your own. &ldquo;A photo from a day you&rsquo;d live again.&rdquo; &ldquo;The most boring photo on your phone you can&rsquo;t bring yourself to delete.&rdquo;</p>
+        </div>
+        <div class="step">
+          <p class="step-num">2.</p>
+          <h3>Both answer</h3>
+          <p>You both pick a photo &mdash; from the camera roll or fresh &mdash; and lock it in. Neither of you can see the other&rsquo;s answer until you&rsquo;re both done.</p>
+        </div>
+        <div class="step">
+          <p class="step-num">3.</p>
+          <h3>Reveal</h3>
+          <p>Both photos drop side-by-side at the same moment. React, ask the next one, and it lands in The Lane &mdash; your shared archive of every swap.</p>
         </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- VALUES (the anti-positioning) -->
-<section class="values">
-  <div class="container">
-    <div class="section-label centre" style="text-align:center;">What it isn't</div>
-    <h2>No social layer. No audience. No performance.</h2>
+    <section class="strip" aria-label="Screenshots">
+      <img src="/assets/screenshots/01-today.jpg" alt="The Today screen showing two swaps waiting on you." />
+      <img src="/assets/screenshots/02-lock-in.jpg" alt="The compose screen — pick a photo, then lock it in." />
+      <img src="/assets/screenshots/03-reveal.jpg" alt="The reveal screen — both photos shown side-by-side." />
+      <img src="/assets/screenshots/04-roll.jpg" alt="A conversation thread of every prompt and reply." />
+      <img src="/assets/screenshots/05-lane.jpg" alt="The Lane — every swap, both ways, kept forever." />
+    </section>
 
-    <div class="values-list">
-      <div class="value-card">
-        <span class="x">✕</span>
-        <h3>No followers</h3>
-        <p>Just the two of you. No public profile. No friend graph. No suggestions.</p>
+    <section>
+      <div class="section-heading">
+        <p class="eyebrow">why swapd</p>
+        <h2>Designed for two. That&rsquo;s the whole brief.</h2>
       </div>
-      <div class="value-card">
-        <span class="x">✕</span>
-        <h3>No likes</h3>
-        <p>Nothing to count. Nothing to farm. Just the photo and what they think of it.</p>
+      <div class="why">
+        <article class="why-card">
+          <h3>Two people. By design.</h3>
+          <p>Every swap is a private space between you and one other person. There&rsquo;s no group chat, no third wheel, no audience. Want to share with someone else? Start a new swap.</p>
+        </article>
+        <article class="why-card">
+          <h3>No feed. No streaks. No nudges.</h3>
+          <p>Pause for a year, the next photo lands as if you never left. Nothing turns red. Nothing guilts you back in.</p>
+        </article>
+        <article class="why-card">
+          <h3>Your photos stay between you.</h3>
+          <p>Nobody at swapd browses them. We don&rsquo;t sell your data, run ads, or train AI on your stuff. Either of you can ask for a photo to be taken down &mdash; if you both agree, it&rsquo;s gone.</p>
+        </article>
+        <article class="why-card">
+          <h3>An archive that grows with you.</h3>
+          <p>Every swap is kept in The Lane &mdash; a chronological scrap-archive of everything you&rsquo;ve traded. Scroll back to anything, any time.</p>
+        </article>
       </div>
-      <div class="value-card">
-        <span class="x">✕</span>
-        <h3>No streaks</h3>
-        <p>No pressure, no gamified daily guilt. Answer when you want to.</p>
-      </div>
-      <div class="value-card">
-        <span class="x">✕</span>
-        <h3>No ads</h3>
-        <p>Ever. Free to start, small one-off upgrades if you want them. No tracking.</p>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- CTA -->
-<section class="cta">
-  <div class="container" style="position: relative; z-index: 2;">
-    <div class="section-label" style="color: var(--pink); text-align: center;">Swapd</div>
-    <h2>One person. One space.<br>The photos you'd never post.</h2>
-    <span class="voice">Go on then.</span>
-    <div class="cta-buttons">
-      <a href="/app" class="btn btn-primary btn-arrow">Get the app</a>
-    </div>
-    <div class="cta-meta">Free to start · iPhone &amp; Android · No ads, ever</div>
-  </div>
-  <div class="cta-decor">
-    <div class="polaroid-photo ph-cream"></div>
-  </div>
-</section>
+    <section class="end-cta">
+      <h2>Make one with someone you love.</h2>
+      <p class="lead">It&rsquo;s free, takes a minute, and ruins nothing if you forget about it for a fortnight.</p>
+      <div class="cta-row" style="justify-content: center;">
+        <a class="btn btn-primary" href="https://apps.apple.com/gb/app/swapd-fun-photo-swaps/id6762082136">
+          <svg class="apple-logo" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M17.05 20.28c-.98.95-2.05.86-3.08.42-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.42C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.08zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
+          </svg>
+          App Store
+        </a>
+        <a class="btn btn-secondary" href="/support#android-beta">Try the Android beta</a>
+      </div>
+    </section>
 
-<!-- FOOTER -->
-<footer>
-  <div class="container">
-    <div class="footer-inner">
-      <a href="/" class="wordmark-foot">swapd<span class="wordmark-dot"></span></a>
+    <footer class="home-foot">
       <div>
+        <a class="swapd-wordmark small" href="/" aria-label="swapd">swapd<svg viewBox="0 0 120 10" aria-hidden="true"><path d="M2 5 Q 18 1, 34 5 T 66 5 T 98 5 T 118 3" stroke="currentColor" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg></a>
+        <small>Made in the UK. <a href="mailto:hello@getswapd.com">hello@getswapd.com</a></small>
+      </div>
+      <nav class="links">
+        <a href="/support">Help &amp; support</a>
         <a href="/privacy">Privacy</a>
         <a href="/terms">Terms</a>
-        <a href="mailto:hello@getswapd.com">hello@getswapd.com</a>
-      </div>
-    </div>
-    <div style="margin-top: 24px; font-size: 12px; opacity: 0.5;">© 2026 Swapd. Made for two.</div>
-  </div>
-</footer>
-
+        <a href="/safety">Safety</a>
+      </nav>
+    </footer>
+  </main>
 </body>
 </html>
