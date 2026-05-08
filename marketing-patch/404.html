@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>swapd</title>
+  <script>
+    // GitHub Pages doesn't do server-side rewrites, so /join/<CODE>
+    // 404s by default. Catch that here: if the path looks like
+    // /join/<valid-code>, rewrite to the real landing page at
+    // /join/?code=<CODE>. iOS Universal Links still verify against
+    // the bare /join/<CODE> path (AASA pattern "/join/*"), so the
+    // 404 is only ever visible to users who don't have the app.
+    (function () {
+      var m = window.location.pathname.match(/^\/join\/([A-Za-z0-9]{4,16})\/?$/);
+      if (m) {
+        window.location.replace('/join/?code=' + m[1].toUpperCase());
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="/assets/swapd.css" />
+  <style>
+    main { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 32px 18px; text-align: center; }
+    main > div { max-width: 360px; }
+    main h1 { font-size: 32px; margin: 16px 0 8px; }
+    main p { color: var(--ink-soft); }
+    .swapd-wordmark { margin: 0 auto 4px; align-items: center; }
+  </style>
+</head>
+<body>
+  <main>
+    <div>
+      <a class="swapd-wordmark" href="/" aria-label="swapd">swapd<svg viewBox="0 0 120 10" aria-hidden="true"><path d="M2 5 Q 18 1, 34 5 T 66 5 T 98 5 T 118 3" stroke="currentColor" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg></a>
+      <h1>Nothing here.</h1>
+      <p>Head back to <a href="/">getswapd.com</a>.</p>
+    </div>
+  </main>
+</body>
+</html>
